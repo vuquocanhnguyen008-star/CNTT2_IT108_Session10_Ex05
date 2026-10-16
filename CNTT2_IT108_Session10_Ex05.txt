@@ -1,0 +1,44 @@
+##BÀI 5: XÂY DỰNG BỘ TÀI LIỆU KỸ THUẬT CHO DỰ ÁN SMART FARM
+### 1. Phân tích Input/Output & Sơ đồ phần cứng (Phần 1)
+* **Input**: Dữ liệu thô về nhiệt độ và độ ẩm đo được từ cảm biến
+* **Output**: Tín hiệu điều khiển máy bơm nước tưới cây và giao diện hiển thị cho người nông dân.
+* **Sơ đồ phối hợp phần cứng**:
+{Cảm biến (Input)} ->{SoC / CPU (Process)} -> {Máy bơm (Output)}
+
+### 2. File `README.md` hoàn chỉnh (Phần 2)
+#Dự án Smart Farm Trang Trại Lan
+Hệ thống **tự động hóa tưới tiêu** dành cho trang trại Lan dựa trên *công nghệ IoT*
+![Sơ đồ hệ thống Smart Farm](https://via.placeholder.com/600x300.png?text=Smart+Farm+Architecture "Sơ đồ hệ thống Smart Farm")
+## Hướng dẫn cài đặt
+git clone [https://github.com/greentech/smart-farm.git](https://github.com/greentech/smart-farm.git)
+cd smart-farm
+python install.py
+
+## Tính năng hệ thống
+- [x] Tự động đo độ ẩm đất và nhiệt độ môi trường
+- [x] Điều khiển máy bơm tưới tự động
+- [ ] Gửi cảnh báo qua SMS khi mất điện
+
+## Bảng thông số kỹ thuật
+| Thiết bị | Thông số | Giao thức |
+| :--- | :--- | :--- |
+| Cảm biến nhiệt độ | DHT22 (-40 đến 80°C) | Digital |
+| Vi điều khiển | ESP32 (SoC) | Wi-Fi / Bluetooth |
+
+## Chu kỳ xử lý lệnh tưới (CPU Fetch-Decode-Execute)
+> 1. **Fetch**: CPU đọc lệnh tưới nước từ bộ nhớ RAM.
+> 2. **Decode**: Bộ giải mã chuyển lệnh thành tín hiệu điều khiển phần cứng.
+> 3. **Execute**: CPU gửi dòng điện kích hoạt rơ-le mở máy bơm tưới Lan.
+
+## Chuyển hóa dữ liệu theo mô hình DIKW
+* **Data (Dữ liệu)**: `35°C` (Con số thô từ cảm biến).
+* **Information (Thông tin)**: Nhiệt độ trang trại Lan hiện tại là `35°C` (vượt ngưỡng trung bình).
+* **Knowledge (Tri thức)**: Cây Lan bị mất nước nhanh khi nhiệt độ vượt `32°C`.
+* **Wisdom (Trí tuệ)**: Kích hoạt hệ thống phun sương làm mát tự động để bảo vệ cây.
+
+## ⚠️ Lưu ý quan trọng
+* **Xử lý khi RAM bị đầy dữ liệu nhật ký (Log)**: Hệ thống sẽ tự động xoá bộ nhớ đệm cũ (theo cơ chế FIFO) và đẩy dữ liệu nhật ký lưu trữ sang thẻ nhớ SD ngoài để tránh tình trạng tràn bộ nhớ (Overflow) làm treo thiết bị.
+
+### 3. Kiểm thử xử lý sự cố RAM (Phần 3)
+* **Phương án**: Tích hợp cơ chế tự động giải phóng log cũ (FIFO) ra thẻ nhớ SD ngoài khi bộ nhớ RAM đầy, giúp hệ thống vận hành liên tục không bị gián đoạn.
+
